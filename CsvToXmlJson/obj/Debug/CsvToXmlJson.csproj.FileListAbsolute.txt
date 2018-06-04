@@ -1,0 +1,10 @@
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\CsvToXmlJson.exe.config
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\CsvToXmlJson.exe
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\CsvToXmlJson.pdb
+D:\Academy\CsvToXmlJson\CsvToXmlJson\obj\Debug\CsvToXmlJson.csprojAssemblyReference.cache
+D:\Academy\CsvToXmlJson\CsvToXmlJson\obj\Debug\CsvToXmlJson.csproj.CoreCompileInputs.cache
+D:\Academy\CsvToXmlJson\CsvToXmlJson\obj\Debug\CsvToXmlJson.exe
+D:\Academy\CsvToXmlJson\CsvToXmlJson\obj\Debug\CsvToXmlJson.pdb
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\Newtonsoft.Json.dll
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\Newtonsoft.Json.xml
+D:\Academy\CsvToXmlJson\CsvToXmlJson\obj\Debug\CsvToXmlJson.csproj.CopyComplete

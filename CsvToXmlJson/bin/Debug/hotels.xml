@@ -1,11 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Hotels>
+<Hotel>
   <Hotel>
     <Id>13</Id>
     <Name>Empire</Name>
     <Date>2011-07-25T00:00:00</Date>
     <Capasity>240</Capasity>
     <Raiting>5</Raiting>
+  </Hotel>
+  <Hotel>
+    <Id>14</Id>
+    <Name>Bucovyna</Name>
+    <Date>2017-01-21T00:00:00</Date>
+    <Capasity>400</Capasity>
+    <Raiting>4.7</Raiting>
   </Hotel>
   <Hotel>
     <Id>11</Id>
@@ -35,4 +42,4 @@
     <Capasity>110</Capasity>
     <Raiting>0</Raiting>
   </Hotel>
-</Hotels>
+</Hotel>

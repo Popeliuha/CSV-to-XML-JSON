@@ -17,15 +17,11 @@ namespace CsvToXmlJson
     {
         public static void Main(string[] args)
         {
-            string CsvPath = ConfigurationManager.AppSettings["CsvPath"];
             try
             {
-                List<Hotels> values = File.ReadAllLines(CsvPath)
-                    .Select(v => Hotels.FromCsv(v))
-                    .ToList();
-                values.Sort();
-                Converter con=new Converter();
-                
+                Converter convertor = new Converter();
+                var values = convertor.Read(ConfigurationManager.AppSettings["CsvPath"]);
+
                 bool flag = true;
                 while (flag)
                 {
@@ -40,7 +36,7 @@ namespace CsvToXmlJson
                     switch (result)
                     {
                         case "1":
-                            con.CreateXml(values);
+                            convertor.CreateXml(values);
                             Console.BackgroundColor = ConsoleColor.DarkRed;
                             Console.WriteLine("You can find XML in CsvToXmlJson/bin/Debug folder");
                             Console.ResetColor();
@@ -50,7 +46,7 @@ namespace CsvToXmlJson
                             Console.WriteLine("You can find JSON in CsvToXmlJson/bin/Debug folder");
                             Console.WriteLine("Pls enter PERENOS PO SLOVAM in your notepad :D");
                             Console.ResetColor();
-                            con.CreateJSON(values);
+                            convertor.CreateJson(values);
                             break;
                         case "3":
                             foreach (var v in values)
@@ -79,9 +75,29 @@ namespace CsvToXmlJson
 
     public class Converter
     {
-        public void CreateXml(List<Hotels> values)
+        public List<Hotel> Read(string addres)
         {
-            string XmlPath = ConfigurationManager.AppSettings["XmlPath"];
+            List<Hotel> values = File.ReadAllLines(addres).Select(FromCsv).ToList();
+            values.Sort();
+            return values;
+        }
+
+        public Hotel FromCsv(string csvLine)
+        {
+            string[] values = csvLine.Split(';');
+            return new Hotel
+            {
+                Name = values[0],
+                Id = Convert.ToInt32(values[1]),
+                FoundedDate = Convert.ToDateTime(values[2]),
+                Capacity = Convert.ToInt32(values[3]),
+                Raiting = values.Length == 4 ? Convert.ToDouble(0) : Convert.ToDouble(values[4])
+            };
+        }
+
+        public void CreateXml(List<Hotel> values)
+        {
+            string xmlPath = ConfigurationManager.AppSettings["XmlPath"];
 
             var xmlWriter = new XmlTextWriter("hotels.xml", null);
             xmlWriter.WriteStartDocument();
@@ -93,19 +109,19 @@ namespace CsvToXmlJson
                 new XElement("Date", i.FoundedDate.Date),
                 new XElement("Capasity", i.Capacity),
                 new XElement("Raiting", i.Raiting)));
-            var bodyXml = new XElement("Hotels", hotelsXml);
-            bodyXml.Save(XmlPath);
+            var bodyXml = new XElement("Hotel", hotelsXml);
+            bodyXml.Save(xmlPath);
         }
 
-        public  void CreateJSON(List<Hotels> values)
+        public  void CreateJson(List<Hotel> values)
         {
-            string JsonPath = ConfigurationManager.AppSettings["JsonPath"];
+            string jsonPath = ConfigurationManager.AppSettings["JsonPath"];
 
             string json = JsonConvert.SerializeObject(values.ToArray());
-            File.WriteAllText(JsonPath, json);
+            File.WriteAllText(jsonPath, json);
         }
     }
-    public class Hotels : IComparable<Hotels>
+    public class Hotel : IComparable<Hotel>
     {
         public string Name { get; set; }
         public int Id { get; set; }
@@ -113,22 +129,9 @@ namespace CsvToXmlJson
         public int Capacity { get; set; }
         public double Raiting { get; set; }
 
-        public int CompareTo(Hotels obj)
+        public int CompareTo(Hotel obj)
         {
             return obj.Raiting.CompareTo(Raiting);
-        }
-
-        public static Hotels FromCsv(string csvLine)
-        {
-            string[] values = csvLine.Split(';');
-            Hotels ho = new Hotels();
-            ho.Name = values[0];
-            ho.Id = Convert.ToInt32(values[1]);
-            ho.FoundedDate = Convert.ToDateTime(values[2]);
-            ho.Capacity = Convert.ToInt32(values[3]);
-            ho.Raiting = values.Length == 4 ? Convert.ToDouble(0) : Convert.ToDouble(values[4]);
-           
-            return ho;
         }
     }
 }

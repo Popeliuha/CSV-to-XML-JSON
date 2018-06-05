@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace CsvToXmlJson
     {
         public static void CreateXml(List<Hotels> values)
         {
+            string XmlPath = ConfigurationManager.AppSettings["XmlPath"];
+
             var xmlWriter = new XmlTextWriter("hotels.xml", null);
             xmlWriter.WriteStartDocument();
 
@@ -27,30 +30,29 @@ namespace CsvToXmlJson
                 new XElement("Capasity", i.Capacity),
                 new XElement("Raiting", i.Raiting)));
             var bodyXml = new XElement("Hotels", hotelsXml);
-            bodyXml.Save("hotels.xml");
-            //Console.Write(bodyXml);
+            bodyXml.Save(XmlPath);
         }
 
         public static void CreateJSON(List<Hotels> values)
         {
+            string JsonPath = ConfigurationManager.AppSettings["JsonPath"];
+
             string json = JsonConvert.SerializeObject(values.ToArray());
-            File.WriteAllText("jsonhotels.txt", json);
+            File.WriteAllText(JsonPath, json);
         }
 
         public static void Main(string[] args)
 
         {
+            string CsvPath = ConfigurationManager.AppSettings["CsvPath"];
+
             try
             {
-                Console.WriteLine("Enter path in format D:/Academy/CsvToXmlJson/Hotels.csv");
-                string path = Console.ReadLine();
-
-                List<Hotels> values = File.ReadAllLines(path)
+                List<Hotels> values = File.ReadAllLines(CsvPath)
                     .Select(v => Hotels.FromCsv(v))
                     .ToList();
                 values.Sort();
-              
-                //SortList(values);
+
                 while (true)
                 {
                     Console.WriteLine("If you want to convert to XML, press 1.");
@@ -58,7 +60,7 @@ namespace CsvToXmlJson
                     Console.WriteLine("If you want to see LIST, press 3.");
                     Console.WriteLine("Press any other key to EXIT.");
                     Console.BackgroundColor = ConsoleColor.DarkBlue;
-                    Console.WriteLine(new string ('=',120));
+                    Console.WriteLine(new string('=', 120));
                     Console.ResetColor();
                     string result = Console.ReadLine();
                     switch (result)
@@ -79,7 +81,7 @@ namespace CsvToXmlJson
                         case "3":
                             foreach (var v in values)
                             {
-                                Console.WriteLine(v.Id+"    "+v.Name+"  "+v.FoundedDate.Date+"   "+v.Raiting+"   "+v.Capacity);
+                                Console.WriteLine(v.Id + "    " + v.Name + "  " + v.FoundedDate.Date + "   " + v.Raiting + "   " + v.Capacity);
                             }
                             Console.WriteLine(new string('-', 120));
                             break;
@@ -99,7 +101,7 @@ namespace CsvToXmlJson
             Console.ReadKey();
         }
     }
-    public class Hotels:IComparable<Hotels>
+    public class Hotels : IComparable<Hotels>
     {
         public string Name { get; set; }
         public int Id { get; set; }
@@ -120,14 +122,8 @@ namespace CsvToXmlJson
             ho.Id = Convert.ToInt32(values[1]);
             ho.FoundedDate = Convert.ToDateTime(values[2]);
             ho.Capacity = Convert.ToInt32(values[3]);
-            if (values.Length == 4)
-            {
-                ho.Raiting = Convert.ToDouble(0);
-            }
-            else
-            {
-                ho.Raiting = Convert.ToDouble(values[4]);
-            }
+            ho.Raiting = values.Length == 4 ? Convert.ToDouble(0) : Convert.ToDouble(values[4]);
+           
             return ho;
         }
     }

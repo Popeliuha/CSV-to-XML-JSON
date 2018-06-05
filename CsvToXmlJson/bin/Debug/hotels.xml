@@ -1,38 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Hotels>
   <Hotel>
+    <Id>13</Id>
+    <Name>Empire</Name>
+    <Date>2011-07-25T00:00:00</Date>
+    <Capasity>240</Capasity>
+    <Raiting>5</Raiting>
+  </Hotel>
+  <Hotel>
     <Id>11</Id>
     <Name>Edelweiss</Name>
     <Date>1988-05-25T00:00:00</Date>
     <Capasity>180</Capasity>
-    <Raiting>5</Raiting>
+    <Raiting>4.3</Raiting>
   </Hotel>
   <Hotel>
     <Id>12</Id>
     <Name>Bristol</Name>
     <Date>1965-03-04T00:00:00</Date>
     <Capasity>140</Capasity>
-    <Raiting>4.3</Raiting>
+    <Raiting>4.1</Raiting>
   </Hotel>
   <Hotel>
     <Id>1</Id>
     <Name>Hilton</Name>
     <Date>1863-02-10T00:00:00</Date>
     <Capasity>321</Capasity>
-    <Raiting>4.1</Raiting>
+    <Raiting>2</Raiting>
   </Hotel>
   <Hotel>
     <Id>50</Id>
     <Name>Balaton</Name>
     <Date>2000-01-05T00:00:00</Date>
     <Capasity>110</Capasity>
-    <Raiting>2</Raiting>
-  </Hotel>
-  <Hotel>
-    <Id>13</Id>
-    <Name>Empire</Name>
-    <Date>2011-07-25T00:00:00</Date>
-    <Capasity>240</Capasity>
     <Raiting>0</Raiting>
   </Hotel>
 </Hotels>

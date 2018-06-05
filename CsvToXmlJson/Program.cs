@@ -15,7 +15,71 @@ namespace CsvToXmlJson
 {
     class Program
     {
-        public static void CreateXml(List<Hotels> values)
+        public static void Main(string[] args)
+        {
+            string CsvPath = ConfigurationManager.AppSettings["CsvPath"];
+            try
+            {
+                List<Hotels> values = File.ReadAllLines(CsvPath)
+                    .Select(v => Hotels.FromCsv(v))
+                    .ToList();
+                values.Sort();
+                Converter con=new Converter();
+                
+                bool flag = true;
+                while (flag)
+                {
+                    Console.WriteLine("If you want to convert to XML, press 1.");
+                    Console.WriteLine("If you want to convert to JSON, press 2.");
+                    Console.WriteLine("If you want to see LIST, press 3.");
+                    Console.WriteLine("Press any other key to EXIT.");
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    Console.WriteLine(new string('=', 120));
+                    Console.ResetColor();
+                    string result = Console.ReadLine();
+                    switch (result)
+                    {
+                        case "1":
+                            con.CreateXml(values);
+                            Console.BackgroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("You can find XML in CsvToXmlJson/bin/Debug folder");
+                            Console.ResetColor();
+                            break;
+                        case "2":
+                            Console.BackgroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("You can find JSON in CsvToXmlJson/bin/Debug folder");
+                            Console.WriteLine("Pls enter PERENOS PO SLOVAM in your notepad :D");
+                            Console.ResetColor();
+                            con.CreateJSON(values);
+                            break;
+                        case "3":
+                            foreach (var v in values)
+                            {
+                                Console.WriteLine(v.Id + "    " + v.Name + "  " + v.FoundedDate.Date + "   " + v.Raiting + "   " + v.Capacity);
+                            }
+                            Console.WriteLine(new string('-', 120));
+                            break;
+                        default:
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
+                            Console.WriteLine("HAVE A NICE DAY MAN");
+                            flag = false;
+                            break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message);
+                Console.ResetColor();
+            }
+            Console.ReadKey();
+        }
+    }
+
+    public class Converter
+    {
+        public void CreateXml(List<Hotels> values)
         {
             string XmlPath = ConfigurationManager.AppSettings["XmlPath"];
 
@@ -33,72 +97,12 @@ namespace CsvToXmlJson
             bodyXml.Save(XmlPath);
         }
 
-        public static void CreateJSON(List<Hotels> values)
+        public  void CreateJSON(List<Hotels> values)
         {
             string JsonPath = ConfigurationManager.AppSettings["JsonPath"];
 
             string json = JsonConvert.SerializeObject(values.ToArray());
             File.WriteAllText(JsonPath, json);
-        }
-
-        public static void Main(string[] args)
-
-        {
-            string CsvPath = ConfigurationManager.AppSettings["CsvPath"];
-
-            try
-            {
-                List<Hotels> values = File.ReadAllLines(CsvPath)
-                    .Select(v => Hotels.FromCsv(v))
-                    .ToList();
-                values.Sort();
-
-                while (true)
-                {
-                    Console.WriteLine("If you want to convert to XML, press 1.");
-                    Console.WriteLine("If you want to convert to JSON, press 2.");
-                    Console.WriteLine("If you want to see LIST, press 3.");
-                    Console.WriteLine("Press any other key to EXIT.");
-                    Console.BackgroundColor = ConsoleColor.DarkBlue;
-                    Console.WriteLine(new string('=', 120));
-                    Console.ResetColor();
-                    string result = Console.ReadLine();
-                    switch (result)
-                    {
-                        case "1":
-                            CreateXml(values);
-                            Console.BackgroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("You can find XML in CsvToXmlJson/bin/Debug folder");
-                            Console.ResetColor();
-                            break;
-                        case "2":
-                            Console.BackgroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("You can find JSON in CsvToXmlJson/bin/Debug folder");
-                            Console.WriteLine("Pls enter PERENOS PO SLOVAM in your notepad :D");
-                            Console.ResetColor();
-                            CreateJSON(values);
-                            break;
-                        case "3":
-                            foreach (var v in values)
-                            {
-                                Console.WriteLine(v.Id + "    " + v.Name + "  " + v.FoundedDate.Date + "   " + v.Raiting + "   " + v.Capacity);
-                            }
-                            Console.WriteLine(new string('-', 120));
-                            break;
-                        default:
-                            Console.BackgroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("HAVE A NICE DAY MAN");
-                            break;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine(e.Message);
-                Console.ResetColor();
-            }
-            Console.ReadKey();
         }
     }
     public class Hotels : IComparable<Hotels>

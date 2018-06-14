@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +23,15 @@ namespace CsvToXmlJson
             {
                 Converter convertor = new Converter();
                 var values = convertor.Read(ConfigurationManager.AppSettings["CsvPath"]);
-
                 bool flag = true;
                 while (flag)
                 {
                     Console.WriteLine("If you want to convert to XML, press 1.");
                     Console.WriteLine("If you want to convert to JSON, press 2.");
                     Console.WriteLine("If you want to see LIST, press 3.");
+                    Console.WriteLine("If you want to convert list to DB, press 4.");
+                    Console.WriteLine("If you want to add new hotel to list, press 5.");
+                    Console.WriteLine("If you want to convert Json to list, press 6.");
                     Console.WriteLine("Press any other key to EXIT.");
                     Console.BackgroundColor = ConsoleColor.DarkBlue;
                     Console.WriteLine(new string('=', 120));
@@ -54,6 +58,25 @@ namespace CsvToXmlJson
                                 Console.WriteLine(v.Id + "    " + v.Name + "  " + v.FoundedDate.Date + "   " + v.Raiting + "   " + v.Capacity);
                             }
                             Console.WriteLine(new string('-', 120));
+                            break;
+                        case "4":
+                            Console.BackgroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("To see result refresh your hotels table in sql server.");
+                            Console.ResetColor();
+                            convertor.ListToDb(values);
+                            break;
+                        case "5":
+                            convertor.AddToList(values);
+                            Console.BackgroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("To see result press 3.");
+                            Console.ResetColor();
+                            break;
+                        case "6":
+                            List<Hotel> newList = convertor.FromJson(ConfigurationManager.AppSettings["JsonPath"]);
+                            foreach (var V in newList)
+                            {
+                                Console.WriteLine(V.Name);
+                            }
                             break;
                         default:
                             Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -93,6 +116,44 @@ namespace CsvToXmlJson
                 Capacity = Convert.ToInt32(values[3]),
                 Raiting = values.Length == 4 ? Convert.ToDouble(0) : Convert.ToDouble(values[4])
             };
+        }
+
+        public List<Hotel> FromJson(string adress)
+        {
+            var json = File.ReadAllText(adress);
+            var newList = JsonConvert.DeserializeObject<List<Hotel>>(json);
+            return newList;
+        }
+
+
+        public void AddToList(List<Hotel> values)
+        {
+            Hotel newHot = new Hotel();
+            Console.WriteLine("Enter name:");
+            newHot.Name = Console.ReadLine();
+            Console.WriteLine("Enter founded date (yyyy,mm,dd)");
+            newHot.FoundedDate = Convert.ToDateTime(Console.ReadLine());
+            Console.WriteLine("Enter hotel capacity:");
+            newHot.Capacity = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter rating:");
+            newHot.Raiting = Convert.ToDouble(Console.ReadLine());
+            values.Add(newHot);
+        }
+
+        public void ListToDb(List<Hotel> values)
+        {
+            using (var db = new HotelsDB())
+            {
+                var hot = new Hotels
+                {
+                    HotelName = "Umnichka",
+                    CreationDate = new DateTime(1998, 01, 01),
+                    Capacity = 400,
+                    Rating = 2
+                };
+                db.Hotels.Add(hot);
+                db.SaveChanges();
+            }
         }
 
         public void CreateXml(List<Hotel> values)

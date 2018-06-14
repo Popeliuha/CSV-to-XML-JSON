@@ -8,3 +8,15 @@ D:\Academy\CsvToXmlJson\CsvToXmlJson\obj\Debug\CsvToXmlJson.pdb
 D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\Newtonsoft.Json.dll
 D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\Newtonsoft.Json.xml
 D:\Academy\CsvToXmlJson\CsvToXmlJson\obj\Debug\CsvToXmlJson.csproj.CopyComplete
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.abstractions.dll
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.assert.dll
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.core.dll
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.execution.desktop.dll
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.abstractions.xml
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.assert.xml
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.core.xml
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\xunit.execution.desktop.xml
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\EntityFramework.dll
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\EntityFramework.SqlServer.dll
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\EntityFramework.xml
+D:\Academy\CsvToXmlJson\CsvToXmlJson\bin\Debug\EntityFramework.SqlServer.xml

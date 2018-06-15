@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvToXmlJson", "CsvToXmlJson\CsvToXmlJson.csproj", "{FCD9281C-835E-40DD-8A99-29441B9ED224}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvToXmlJsonTest", "CsvToXmlJsonTest\CsvToXmlJsonTest.csproj", "{DDF98B4B-CA67-4C31-82B7-DC7C7BA36FDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FCD9281C-835E-40DD-8A99-29441B9ED224}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCD9281C-835E-40DD-8A99-29441B9ED224}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCD9281C-835E-40DD-8A99-29441B9ED224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF98B4B-CA67-4C31-82B7-DC7C7BA36FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF98B4B-CA67-4C31-82B7-DC7C7BA36FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF98B4B-CA67-4C31-82B7-DC7C7BA36FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF98B4B-CA67-4C31-82B7-DC7C7BA36FDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

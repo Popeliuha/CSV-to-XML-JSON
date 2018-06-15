@@ -105,6 +105,13 @@ namespace CsvToXmlJson
             return values;
         }
 
+        public List<Hotels> ReadHotels(string addres)
+        {
+            List<Hotels> valuess = File.ReadAllLines(addres).Select(FromCsvHotels).ToList();
+            valuess.Sort();
+            return valuess;
+        }
+
         public Hotel FromCsv(string csvLine)
         {
             string[] values = csvLine.Split(';');
@@ -118,6 +125,18 @@ namespace CsvToXmlJson
             };
         }
 
+        public Hotels FromCsvHotels(string csvLine)
+        {
+            string[] valuess = csvLine.Split(';');
+            return new Hotels
+            {
+                HotelName = valuess[0],
+                HotelId = Convert.ToInt32(valuess[1]),
+                CreationDate = Convert.ToDateTime(valuess[2]),
+                Capacity = Convert.ToInt32(valuess[3]),
+                Rating = valuess.Length == 4 ? Convert.ToDecimal(0) : Convert.ToDecimal(valuess[4])
+            };
+        }
         public List<Hotel> FromJson(string adress)
         {
             var json = File.ReadAllText(adress);
@@ -142,16 +161,22 @@ namespace CsvToXmlJson
 
         public void ListToDb(List<Hotel> values)
         {
+
+            var valuess = ReadHotels(ConfigurationManager.AppSettings["CsvPath"]);
             using (var db = new HotelsDB())
             {
-                var hot = new Hotels
+                foreach (var h in valuess)
+                {
+                    db.Hotels.Add(h);
+                }
+                /*var hot = new Hotels
                 {
                     HotelName = "Umnichka",
                     CreationDate = new DateTime(1998, 01, 01),
                     Capacity = 400,
                     Rating = 2
                 };
-                db.Hotels.Add(hot);
+                db.Hotels.Add(hot);*/
                 db.SaveChanges();
             }
         }

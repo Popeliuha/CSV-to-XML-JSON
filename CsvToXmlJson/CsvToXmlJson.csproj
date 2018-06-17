@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="Hotel.cs" />
     <Compile Include="Hotels.cs" />
     <Compile Include="HotelsDB.cs" />
     <Compile Include="Program.cs" />
